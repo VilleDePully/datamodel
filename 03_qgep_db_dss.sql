@@ -1897,7 +1897,7 @@ ALTER TABLE qgep_od.reach ADD COLUMN length_effective  decimal(7,2) ;
 COMMENT ON COLUMN qgep_od.reach.length_effective IS 'yyy_Tatsächliche schräge Länge (d.h. nicht in horizontale Ebene projiziert)  inklusive Kanalkrümmungen / Tatsächliche schräge Länge (d.h. nicht in horizontale Ebene projiziert)  inklusive Kanalkrümmungen / Longueur effective (non projetée) incluant les parties incurvées';
 ALTER TABLE qgep_od.reach ADD COLUMN material  integer ;
 COMMENT ON COLUMN qgep_od.reach.material IS 'Material of reach / pipe / Rohrmaterial / Matériau du tuyau';
-ALTER TABLE qgep_od.reach ADD COLUMN progression_geometry geometry('COMPOUNDCURVEZ', :SRID);
+ALTER TABLE qgep_od.reach ADD COLUMN progression_geometry geometry('LINESTRINGZ', :SRID);
 CREATE INDEX in_qgep_od_reach_progression_geometry ON qgep_od.reach USING gist (progression_geometry );
 COMMENT ON COLUMN qgep_od.reach.progression_geometry IS 'Start, inflextion and endpoints of a pipe / Anfangs-, Knick- und Endpunkte der Leitung / Points de départ, intermédiaires et d’arrivée de la conduite.';
 ALTER TABLE qgep_od.reach ADD COLUMN reliner_material  integer ;
