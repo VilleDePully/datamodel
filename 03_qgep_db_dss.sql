@@ -780,7 +780,7 @@ ALTER TABLE qgep_od.wastewater_structure ADD COLUMN financing  integer ;
 COMMENT ON COLUMN qgep_od.wastewater_structure.financing IS ' Method of financing  (Financing based on GschG Art. 60a). / Finanzierungart (Finanzierung gemäss GschG Art. 60a). / Type de financement (financement selon LEaux Art. 60a)';
 ALTER TABLE qgep_od.wastewater_structure ADD COLUMN gross_costs  decimal(10,2) ;
 COMMENT ON COLUMN qgep_od.wastewater_structure.gross_costs IS 'Gross costs of construction / Brutto Erstellungskosten / Coûts bruts des travaux de construction';
-ALTER TABLE qgep_od.wastewater_structure ADD COLUMN identifier  varchar(20) ;
+ALTER TABLE qgep_od.wastewater_structure ADD COLUMN identifier  varchar(100) ;
 COMMENT ON COLUMN qgep_od.wastewater_structure.identifier IS 'yyy_Pro Datenherr eindeutige Bezeichnung / Pro Datenherr eindeutige Bezeichnung / Désignation unique pour chaque maître des données';
 ALTER TABLE qgep_od.wastewater_structure ADD COLUMN inspection_interval  decimal(4,2) ;
 COMMENT ON COLUMN qgep_od.wastewater_structure.inspection_interval IS 'yyy_Abstände, in welchen das Abwasserbauwerk inspiziert werden sollte (Jahre) / Abstände, in welchen das Abwasserbauwerk inspiziert werden sollte (Jahre) / Fréquence à laquelle un ouvrage du réseau d‘assainissement devrait subir une inspection (années)';
