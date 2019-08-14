@@ -12,3 +12,43 @@ ALTER TABLE qgep_vl.pully_node_bottom_material ADD CONSTRAINT pkey_qgep_vl_pully
  ALTER TABLE qgep_od.wastewater_node ADD CONSTRAINT fkey_vl_pully_node_bottom_material FOREIGN KEY (pully_bottom_material)
  REFERENCES qgep_vl.pully_node_bottom_material (code) MATCH SIMPLE 
 ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN pully_id_topobase character varying(40);
+
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN pully_table_topobase character varying(40);
+
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN pully_db_topobase character varying(40);
+
+/*
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN fk_district integer;
+
+ALTER TABLE qgep_od.wastewater_structure
+ADD CONSTRAINT ws_fk_district FOREIGN KEY (fk_district)
+        REFERENCES qgep_od.district (id) MATCH FULL
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION;
+
+CREATE TABLE qgep_od.district
+(
+    id integer NOT NULL DEFAULT nextval('qgep_od.district_id_seq'::regclass),
+    name character varying(40) NOT NULL,
+    shortname character varying(12),
+    zip character varying(12),
+    land_registry character varying(12),
+    prefix character varying(12),
+    geometry geometry(MultiPolygon,21781),
+    CONSTRAINT district_pkey PRIMARY KEY (id),
+    CONSTRAINT district_name UNIQUE (name)
+);
+
+CREATE INDEX district_geoidx
+    ON qgep_od.district USING gist
+    (geometry)
+    TABLESPACE pg_default;
+
+*/
+
