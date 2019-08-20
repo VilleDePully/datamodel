@@ -52,3 +52,33 @@ CREATE INDEX district_geoidx
 
 */
 
+-- UPDATE structure_condition values
+
+UPDATE qgep_vl.wastewater_structure_structure_condition
+SET value_fr = 'Z0_ne_fonctionne_plus'
+WHERE code = 3363;
+
+UPDATE qgep_vl.wastewater_structure_structure_condition
+SET value_fr = 'Z1_defauts_graves'
+WHERE code = 3359;
+
+UPDATE qgep_vl.wastewater_structure_structure_condition
+SET value_fr = 'Z2_defauts_moyens'
+WHERE code = 3360;
+
+UPDATE qgep_vl.wastewater_structure_structure_condition
+SET value_fr = 'Z3_defauts_legers'
+WHERE code = 3361;
+
+UPDATE qgep_vl.wastewater_structure_structure_condition
+SET value_fr = 'Z4_aucun_defaut'
+WHERE code = 3362;
+
+-- Activation_desactivation des valeurs inutilisées
+UPDATE qgep_vl.manhole_function
+SET active = FALSE
+WHERE code IN (4532,4536,4537,4798,5344,5346,5347);
+
+UPDATE qgep_vl.special_structure_function
+SET active = FALSE
+WHERE code IN (2998,386,5371,5373,5091,5575,5576,3673,3675,3676,3677,383,2745,3234,3348);
