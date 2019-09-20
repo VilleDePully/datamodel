@@ -1782,7 +1782,7 @@ WITH (
 CREATE SEQUENCE qgep_od.seq_wastewater_networkelement_oid INCREMENT 1 MINVALUE 0 MAXVALUE 999999 START 0;
  ALTER TABLE qgep_od.wastewater_networkelement ALTER COLUMN obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_networkelement');
 COMMENT ON COLUMN qgep_od.wastewater_networkelement.obj_id IS '[primary_key] INTERLIS STANDARD OID (with Postfix/Präfix) or UUOID, see www.interlis.ch';
-ALTER TABLE qgep_od.wastewater_networkelement ADD COLUMN identifier  varchar(20) ;
+ALTER TABLE qgep_od.wastewater_networkelement ADD COLUMN identifier  varchar(100) ;
 COMMENT ON COLUMN qgep_od.wastewater_networkelement.identifier IS '';
 ALTER TABLE qgep_od.wastewater_networkelement ADD COLUMN remark text ;
 COMMENT ON COLUMN qgep_od.wastewater_networkelement.remark IS 'General remarks / Allgemeine Bemerkungen / Remarques générales';
