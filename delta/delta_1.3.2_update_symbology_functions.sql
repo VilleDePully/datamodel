@@ -1,4 +1,6 @@
 
+-- Add Wastewater node level to ws label in french
+
 CREATE OR REPLACE FUNCTION qgep_od.update_wastewater_structure_label(_obj_id text, _all boolean default false)
   RETURNS VOID AS
   $BODY$
@@ -10,20 +12,17 @@ UPDATE qgep_od.wastewater_structure ws
 SET _label = label
 FROM (
   SELECT ws_obj_id,
-       COALESCE(ws_identifier, '') ||
-       E'\n' ||
+       COALESCE(ws_identifier, '') || E'\n' || 
         array_to_string(
-         array_agg( 'C' || '=' || co_level::text ORDER BY co_level DESC),
+         array_append(array_agg('C' || '=' || co_level::text ORDER BY co_level DESC), ''),
          E'\n'
-        )||
-       E'\n' ||
+        ) ||
        array_to_string(
-         array_agg(lbl_type || idx || '=' || rp_level ORDER BY lbl_type, idx)
+         array_append(array_agg(lbl_type || idx || '=' || rp_level ORDER BY lbl_type, idx), '')
            , E'\n'
-         )||
-       E'\n' ||
+         ) ||
 	   array_to_string(
-         array_agg(lbl_type || '=' || bottom_level)
+         array_append(array_agg('R' || '=' || bottom_level), '')
            , E'\n'
          )
 	AS label
@@ -65,5 +64,35 @@ END
 
 $BODY$
 LANGUAGE plpgsql
+VOLATILE;
+
+-- Add wasterwater node update on trigger
+
+CREATE OR REPLACE FUNCTION qgep_od.on_wasterwaternode_change()
+  RETURNS trigger AS
+$BODY$
+DECLARE
+  co_obj_id TEXT;
+  affected_sp RECORD;
+BEGIN
+  CASE
+    WHEN TG_OP = 'UPDATE' THEN
+      co_obj_id = OLD.obj_id;
+    WHEN TG_OP = 'INSERT' THEN
+      co_obj_id = NEW.obj_id;
+    WHEN TG_OP = 'DELETE' THEN
+      co_obj_id = OLD.obj_id;
+  END CASE;
+
+  SELECT ne.fk_wastewater_structure INTO affected_sp
+  FROM qgep_od.wastewater_networkelement ne
+  WHERE obj_id = co_obj_id;
+
+  EXECUTE qgep_od.update_depth(affected_sp.fk_wastewater_structure);
+  EXECUTE qgep_od.update_wastewater_structure_label(affected_sp.fk_wastewater_structure);
+
+  RETURN NEW;
+END; $BODY$
+LANGUAGE plpgsql 
 VOLATILE;
 
