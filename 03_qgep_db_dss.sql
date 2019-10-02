@@ -2137,7 +2137,7 @@ WITH (
 CREATE SEQUENCE qgep_od.seq_structure_part_oid INCREMENT 1 MINVALUE 0 MAXVALUE 999999 START 0;
  ALTER TABLE qgep_od.structure_part ALTER COLUMN obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','structure_part');
 COMMENT ON COLUMN qgep_od.structure_part.obj_id IS '[primary_key] INTERLIS STANDARD OID (with Postfix/Präfix) or UUOID, see www.interlis.ch';
-ALTER TABLE qgep_od.structure_part ADD COLUMN identifier  varchar(20) ;
+ALTER TABLE qgep_od.structure_part ADD COLUMN identifier  varchar(100) ;
 COMMENT ON COLUMN qgep_od.structure_part.identifier IS '';
 ALTER TABLE qgep_od.structure_part ADD COLUMN remark text ;
 COMMENT ON COLUMN qgep_od.structure_part.remark IS 'General remarks / Allgemeine Bemerkungen / Remarques générales';
