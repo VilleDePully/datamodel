@@ -91,7 +91,9 @@ def vw_qgep_wastewater_structure(srid: int,
         LEFT JOIN qgep_od.infiltration_installation ii ON ii.obj_id = ws.obj_id
         LEFT JOIN qgep_od.wastewater_networkelement ne ON ne.obj_id = ws.fk_main_wastewater_node
         LEFT JOIN qgep_od.wastewater_node wn ON wn.obj_id = ws.fk_main_wastewater_node
-        {extra_joins};
+        {extra_joins}
+        WHERE ws.fk_main_wastewater_node IS NOT NULL
+        ;
        
         ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_structure');
         ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER co_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','structure_part');
@@ -310,7 +312,6 @@ def vw_qgep_wastewater_structure(srid: int,
                                                        'fk_wastewater_structure': 'NEW.obj_id'})
                )
 
-    print(trigger_insert_sql)
     cursor.execute(trigger_insert_sql)
 
     update_trigger_sql = """
