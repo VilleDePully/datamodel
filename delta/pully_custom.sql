@@ -82,3 +82,26 @@ WHERE code IN (4532,4536,4537,4798,5344,5346,5347);
 UPDATE qgep_vl.special_structure_function
 SET active = FALSE
 WHERE code IN (2998,386,5371,5373,5091,5575,5576,3673,3675,3676,3677,383,2745,3234,3348);
+
+/*
+UPDATE qgep_vl.channel_function_hierarchic
+SET active = FALSE
+WHERE code IN ();
+*/
+
+/*
+UPDATE qgep_vl.special_structure_function
+SET active = FALSE
+WHERE code IN ();
+*/
+
+UPDATE qgep_vl.reach_material
+SET active = FALSE
+WHERE code IN (3640,2761);
+
+GRANT ALL ON TABLE qgep_vl.reach_material TO qgep;
+
+REFRESH MATERIALIZED VIEW qgep_od.vw_network_node with data;
+REFRESH MATERIALIZED VIEW qgep_od.vw_network_segment with data;
+
+
