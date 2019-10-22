@@ -104,4 +104,8 @@ GRANT ALL ON TABLE qgep_vl.reach_material TO qgep;
 REFRESH MATERIALIZED VIEW qgep_od.vw_network_node with data;
 REFRESH MATERIALIZED VIEW qgep_od.vw_network_segment with data;
 
+/* Insert qgep_dr missing*/
 
+-- Add Grants for construction sequences
+GRANT ALL ON SEQUENCE qgep_dr.constructionpoint_id_seq TO qgep_user;
+GRANT ALL ON SEQUENCE qgep_dr.constructionline_id_seq TO qgep_user;
