@@ -13,6 +13,41 @@ ALTER TABLE qgep_vl.pully_node_bottom_material ADD CONSTRAINT pkey_qgep_vl_pully
  REFERENCES qgep_vl.pully_node_bottom_material (code) MATCH SIMPLE 
 ON UPDATE RESTRICT ON DELETE RESTRICT;
 
+/*Ajout du type de noeud pour les noeuds réseau*/
+
+ALTER TABLE qgep_od.wastewater_node
+ADD COLUMN pully_node_type integer;
+
+CREATE TABLE qgep_vl.pully_node_type () INHERITS (qgep_sys.value_list_base);
+
+ALTER TABLE qgep_vl.pully_node_type ADD CONSTRAINT pkey_qgep_vl_pully_node_type_code PRIMARY KEY (code);
+
+ INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10001,10001,'bottom','sohle','radier', '', '', 'B', 'S', 'R', '', '', 'true');
+
+ INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10002,10002,'channel_start','','debut_canal', '', '', '', '', '', '', '', 'true');
+
+ INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10003,10003,'change_year_of_construction','','changement_annee_construction', '', '', '', '', '', '', '', 'true');
+
+ INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10004,10004,'change_diameter_material','','changement_diametre_materiau', '', '', '', '', '', '', '', 'true');
+
+  INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10005,10005,'change_diameter','','changement_diametre', '', '', '', '', '', '', '', 'true');
+
+  INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10006,10006,'change_material','','changement_materiau', '', '', '', '', '', '', '', 'true');
+
+   INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10007,10007,'change_slope','','changement_pente', '', '', '', '', '', '', '', 'true');
+
+    INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10008,10008,'channel_connection','','raccord_collecteur', '', '', '', '', '', '', '', 'true');
+
+/*Insertion des références objet de topobase*/
+
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN pully_id_topobase character varying(40);
 
