@@ -57,6 +57,9 @@ ADD COLUMN pully_table_topobase character varying(40);
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN pully_db_topobase character varying(40);
 
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN pully_validated boolean;
+
 /*
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN fk_district integer;
