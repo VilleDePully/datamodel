@@ -46,6 +46,11 @@ ALTER TABLE qgep_vl.pully_node_type ADD CONSTRAINT pkey_qgep_vl_pully_node_type_
     INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10008,10008,'channel_connection','','raccord_collecteur', '', '', '', '', '', '', '', 'true');
 
+/* Insertion des orientations */
+
+ALTER TABLE qgep_od.wastewater_node
+ADD COLUMN pully_orientation double precision DEFAULT 0;
+
 /*Insertion des références objet de topobase*/
 
 ALTER TABLE qgep_od.wastewater_structure
@@ -58,7 +63,7 @@ ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN pully_db_topobase character varying(40);
 
 ALTER TABLE qgep_od.wastewater_structure
-ADD COLUMN pully_validated boolean;
+ADD COLUMN pully_validation boolean;
 
 /*
 ALTER TABLE qgep_od.wastewater_structure
