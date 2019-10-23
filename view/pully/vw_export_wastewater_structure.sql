@@ -2,7 +2,7 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
  SELECT vw_qgep_wastewater_structure.obj_id,
     vw_qgep_wastewater_structure.identifier AS identification,
     vw_qgep_wastewater_structure.ws_type AS type,
-    manhole_function.value_fr AS fonction,
+    coalesce(manhole_function.value_fr, manhole_function.value_fr) AS fonction,
     material.value_fr AS materiau,
     vw_qgep_wastewater_structure.ma_dimension1 AS longueur,
     vw_qgep_wastewater_structure.ma_dimension2 AS largeur,
@@ -36,4 +36,6 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
      LEFT JOIN qgep_vl.special_structure_bypass bypass ON bypass.code = vw_qgep_wastewater_structure.ss_bypass
      LEFT JOIN qgep_vl.special_structure_function special_structure_function ON special_structure_function.code = vw_qgep_wastewater_structure.ss_function
      LEFT JOIN qgep_vl.special_structure_stormwater_tank_arrangement stormwater_tank_arrangement ON stormwater_tank_arrangement.code = vw_qgep_wastewater_structure.ss_stormwater_tank_arrangement
-     LEFT JOIN qgep_vl.discharge_point_relevance relevance ON relevance.code = vw_qgep_wastewater_structure.dp_relevance;
+     LEFT JOIN qgep_vl.discharge_point_relevance relevance ON relevance.code = vw_qgep_wastewater_structure.dp_relevance
+WHERE vw_qgep_wastewater_structure.situation_geometry is NOT NULL
+;
