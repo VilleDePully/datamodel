@@ -8,14 +8,16 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
     vw_qgep_wastewater_structure.ma_dimension2 AS largeur,
     status.value_fr AS statut,
     positional_accuracy.value_fr AS precplan,
-	vw_qgep_wastewater_structure.co_level AS altitude_couvercle,
+    vw_qgep_wastewater_structure.co_level AS altitude_couvercle,
     vw_qgep_wastewater_structure.wn_bottom_level AS altitude_radier,
-	owner.identifier AS proprietaire,
+    owner.identifier AS proprietaire,
     vw_qgep_wastewater_structure._depth AS profondeur,
     vw_qgep_wastewater_structure.year_of_construction AS annee_construction,
+    vw_qgep_wastewater_structure._label,
+    wastewater_structure.detail_geometry_geometry,
     vw_qgep_wastewater_structure.situation_geometry
 
-   FROM qgep_od.vw_qgep_wastewater_structure
+   FROM qgep_od.vw_qgep_wastewater_structure vw_qgep_wastewater_structure
      LEFT JOIN qgep_vl.cover_cover_shape cover_shape ON cover_shape.code = vw_qgep_wastewater_structure.co_shape
      LEFT JOIN qgep_vl.cover_fastening cover_fastening ON cover_fastening.code = vw_qgep_wastewater_structure.co_fastening
      LEFT JOIN qgep_vl.cover_material cover_material ON cover_material.code = vw_qgep_wastewater_structure.co_material
@@ -37,5 +39,6 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
      LEFT JOIN qgep_vl.special_structure_function special_structure_function ON special_structure_function.code = vw_qgep_wastewater_structure.ss_function
      LEFT JOIN qgep_vl.special_structure_stormwater_tank_arrangement stormwater_tank_arrangement ON stormwater_tank_arrangement.code = vw_qgep_wastewater_structure.ss_stormwater_tank_arrangement
      LEFT JOIN qgep_vl.discharge_point_relevance relevance ON relevance.code = vw_qgep_wastewater_structure.dp_relevance
+     LEFT JOIN qgep_od.wastewater_structure ON vw_qgep_wastewater_structure.obj_id = wastewater_structure.obj_id
 WHERE vw_qgep_wastewater_structure.situation_geometry is NOT NULL
 ;

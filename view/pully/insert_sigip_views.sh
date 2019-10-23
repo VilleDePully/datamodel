@@ -18,3 +18,6 @@ psql "service=${PGSERVICE}" -c "ALTER DEFAULT PRIVILEGES IN SCHEMA qgep_sigip GR
 
 psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_reach.sql
 psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_wastewater_structure.sql
+psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_wastewater_node.sql
+psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_cover.sql
+
