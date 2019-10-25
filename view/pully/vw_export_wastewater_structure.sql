@@ -2,7 +2,7 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
  SELECT vw_qgep_wastewater_structure.obj_id,
     vw_qgep_wastewater_structure.identifier AS identification,
     vw_qgep_wastewater_structure.ws_type AS type,
-    coalesce(manhole_function.value_fr, manhole_function.value_fr) AS fonction,
+    coalesce(manhole_function.value_fr, special_structure_function.value_fr) AS fonction,
     material.value_fr AS materiau,
     vw_qgep_wastewater_structure.ma_dimension1 AS longueur,
     vw_qgep_wastewater_structure.ma_dimension2 AS largeur,
