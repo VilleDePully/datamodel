@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
+CREATE OR REPLACE VIEW qgep_sigip.vw_export_detail_structure AS
  SELECT vw_qgep_wastewater_structure.obj_id,
     vw_qgep_wastewater_structure.identifier AS identification,
     vw_qgep_wastewater_structure.ws_type AS type,
@@ -15,8 +15,8 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
     vw_qgep_wastewater_structure.year_of_construction AS annee_construction,
     vw_qgep_wastewater_structure._label,
     vw_qgep_wastewater_structure.wn_pully_orientation,
-    --wastewater_structure.detail_geometry_geometry,
-    vw_qgep_wastewater_structure.situation_geometry
+    wastewater_structure.detail_geometry_geometry
+    --vw_qgep_wastewater_structure.situation_geometry
 
    FROM qgep_od.vw_qgep_wastewater_structure vw_qgep_wastewater_structure
      LEFT JOIN qgep_vl.cover_cover_shape cover_shape ON cover_shape.code = vw_qgep_wastewater_structure.co_shape
@@ -41,5 +41,5 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
      LEFT JOIN qgep_vl.special_structure_stormwater_tank_arrangement stormwater_tank_arrangement ON stormwater_tank_arrangement.code = vw_qgep_wastewater_structure.ss_stormwater_tank_arrangement
      LEFT JOIN qgep_vl.discharge_point_relevance relevance ON relevance.code = vw_qgep_wastewater_structure.dp_relevance
      LEFT JOIN qgep_od.wastewater_structure ON vw_qgep_wastewater_structure.obj_id = wastewater_structure.obj_id
-WHERE vw_qgep_wastewater_structure.situation_geometry is NOT NULL
+WHERE wastewater_structure.detail_geometry_geometry is NOT NULL
 ;
