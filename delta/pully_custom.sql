@@ -65,6 +65,28 @@ ADD COLUMN pully_db_topobase character varying(40);
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN pully_validation boolean;
 
+/* Insertion des références objet des couvercles */
+
+ALTER TABLE qgep_od.wastewater_node
+ADD COLUMN pully_id_topobase character varying(40);
+
+ALTER TABLE qgep_od.wastewater_node
+ADD COLUMN pully_table_topobase character varying(40);
+
+ALTER TABLE qgep_od.wastewater_node
+ADD COLUMN pully_db_topobase character varying(40);
+
+/* Insertion des références objet des couvercles */
+
+ALTER TABLE qgep_od.cover
+ADD COLUMN pully_id_topobase character varying(40);
+
+ALTER TABLE qgep_od.cover
+ADD COLUMN pully_table_topobase character varying(40);
+
+ALTER TABLE qgep_od.cover
+ADD COLUMN pully_db_topobase character varying(40);
+
 /*
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN fk_district integer;
