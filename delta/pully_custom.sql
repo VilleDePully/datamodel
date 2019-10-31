@@ -22,36 +22,78 @@ CREATE TABLE qgep_vl.pully_node_type () INHERITS (qgep_sys.value_list_base);
 
 ALTER TABLE qgep_vl.pully_node_type ADD CONSTRAINT pkey_qgep_vl_pully_node_type_code PRIMARY KEY (code);
 
- INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10001,10001,'bottom','sohle','radier', '', '', 'B', 'S', 'R', '', '', 'true');
 
- INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10002,10002,'channel_start','','debut_canal', '', '', '', '', '', '', '', 'true');
 
- INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10003,10003,'change_year_of_construction','','changement_annee_construction', '', '', '', '', '', '', '', 'true');
 
- INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10004,10004,'change_diameter_material','','changement_diametre_materiau', '', '', '', '', '', '', '', 'true');
 
-  INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10005,10005,'change_diameter','','changement_diametre', '', '', '', '', '', '', '', 'true');
 
-  INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10006,10006,'change_material','','changement_materiau', '', '', '', '', '', '', '', 'true');
 
-   INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10007,10007,'change_slope','','changement_pente', '', '', '', '', '', '', '', 'true');
 
-    INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
  VALUES (10008,10008,'channel_connection','','raccord_collecteur', '', '', '', '', '', '', '', 'true');
 
-/* Insertion des orientations */
+INSERT INTO qgep_vl.pully_node_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10009,10009,'se_evac','','systeme_evacuation', '', '', '', '', '', '', '', 'true');
+
+/* Ajout du type de système d'évacuation*/
+
+ALTER TABLE qgep_od.wastewater_node
+ADD COLUMN pully_se_type integer;
+
+CREATE TABLE qgep_vl.pully_se_type () INHERITS (qgep_sys.value_list_base);
+
+ALTER TABLE qgep_vl.pully_se_type ADD CONSTRAINT pkey_qgep_vl_pully_se_type_code PRIMARY KEY (code);
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10101,10101,'utility_room','','buanderie', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10102,10102,'grating','','caillebotis', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10103,10103,'gutter','','chéneau', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10104,10104,'drop_column','','colonne_de_chute', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10105,10105,'kitchen','','cuisine', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10106,10106,'sink','','evier', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10107,10107,'connection','','raccordement', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10108,10108,'dispatch','','separateur', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10109,10109,'toilets','','wc', '', '', '', '', '', '', '', 'true');
+
+INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active)
+ VALUES (10110,10110,'manhole','','chambre_de_visite', '', '', '', '', '', '', '', 'true');
+
+/* Ajout des orientations */
 
 ALTER TABLE qgep_od.wastewater_node
 ADD COLUMN pully_orientation double precision DEFAULT 0;
 
-/*Insertion des références objet de topobase*/
+/* Ajout des références objet de topobase*/
 
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN pully_id_topobase character varying(40);
