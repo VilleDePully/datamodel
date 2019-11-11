@@ -13,6 +13,8 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
     owner.identifier AS proprietaire,
     vw_qgep_wastewater_structure._depth AS profondeur,
     vw_qgep_wastewater_structure.year_of_construction AS annee_construction,
+    vw_qgep_wastewater_structure._channel_usage_current AS genre_utilisation,
+    vw_qgep_wastewater_structure._channel_function_hierarchic AS fonction_hierarchique,
     vw_qgep_wastewater_structure._label,
     vw_qgep_wastewater_structure.wn_pully_orientation,
     --wastewater_structure.detail_geometry_geometry,
