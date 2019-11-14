@@ -13,8 +13,8 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_detail_structure AS
     owner.identifier AS proprietaire,
     vw_qgep_wastewater_structure._depth AS profondeur,
     vw_qgep_wastewater_structure.year_of_construction AS annee_construction,
-    vw_qgep_wastewater_structure._channel_usage_current AS genre_utilisation,
-    vw_qgep_wastewater_structure._channel_function_hierarchic AS fonction_hierarchique,
+    usage.value_fr AS genre_utilisation,
+    fonction_hierarchique.value_fr AS fonction_hierarchique,
     vw_qgep_wastewater_structure._label,
     vw_qgep_wastewater_structure.wn_pully_orientation,
     wastewater_structure.detail_geometry_geometry
@@ -43,5 +43,7 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_detail_structure AS
      LEFT JOIN qgep_vl.special_structure_stormwater_tank_arrangement stormwater_tank_arrangement ON stormwater_tank_arrangement.code = vw_qgep_wastewater_structure.ss_stormwater_tank_arrangement
      LEFT JOIN qgep_vl.discharge_point_relevance relevance ON relevance.code = vw_qgep_wastewater_structure.dp_relevance
      LEFT JOIN qgep_od.wastewater_structure ON vw_qgep_wastewater_structure.obj_id = wastewater_structure.obj_id
+     LEFT JOIN qgep_vl.channel_usage_current usage ON usage.code = vw_qgep_wastewater_structure._channel_usage_current
+     LEFT JOIN qgep_vl.channel_function_hierarchic fonction_hierarchique ON fonction_hierarchique.code = vw_qgep_wastewater_structure._channel_function_hierarchic
 WHERE wastewater_structure.detail_geometry_geometry is NOT NULL
 ;
