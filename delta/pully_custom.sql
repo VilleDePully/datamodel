@@ -182,13 +182,30 @@ SET value_fr = 'Z4_aucun_defaut'
 WHERE code = 3362;
 
 -- Activation_desactivation des valeurs inutilisées
+/*Fonctions des chambres*/
 UPDATE qgep_vl.manhole_function
 SET active = FALSE
 WHERE code IN (4532,4536,4537,4798,5344,5346,5347);
 
+/*Fonctions des chambres spéciales*/
 UPDATE qgep_vl.special_structure_function
 SET active = FALSE
 WHERE code IN (2998,386,5371,5373,5091,5575,5576,3673,3675,3676,3677,383,2745,3234,3348);
+
+/*Fonctions des structures d'évacuation en double*/
+UPDATE qgep_vl.pully_se_type
+SET active = FALSE
+WHERE code IN (10110,10103,10102,10107,10108);
+
+/*Fonctions hierarchiques*/
+UPDATE qgep_vl.channel_function_hierarchic
+SET active = FALSE
+WHERE code NOT IN (5075,5074,5065,5069);
+
+/*Usage current */
+UPDATE qgep_vl.channel_usage_current
+SET active = FALSE
+WHERE code NOT IN (4571,4526,4520,4514,4522);
 
 /*
 UPDATE qgep_vl.channel_function_hierarchic
