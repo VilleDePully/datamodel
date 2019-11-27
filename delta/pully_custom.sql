@@ -205,7 +205,7 @@ WHERE code NOT IN (5075,5074,5065,5069);
 /*Usage current */
 UPDATE qgep_vl.channel_usage_current
 SET active = FALSE
-WHERE code NOT IN (4571,4526,4520,4514,4522);
+WHERE code NOT IN (4571,4526,4514,4522);
 
 /*
 UPDATE qgep_vl.channel_function_hierarchic
