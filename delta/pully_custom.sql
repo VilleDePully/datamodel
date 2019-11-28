@@ -107,6 +107,9 @@ ADD COLUMN pully_db_topobase character varying(40);
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN pully_validation boolean;
 
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN pully_fk_chantier integer;
+
 /* Insertion des références objet des couvercles */
 
 ALTER TABLE qgep_od.wastewater_node
