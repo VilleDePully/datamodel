@@ -2748,7 +2748,7 @@ ALTER TABLE qgep_od.measuring_point ADD COLUMN purpose  integer ;
 COMMENT ON COLUMN qgep_od.measuring_point.purpose IS 'Purpose of measurement / Zweck der Messung / Objet de la mesure';
 ALTER TABLE qgep_od.measuring_point ADD COLUMN remark text ;
 COMMENT ON COLUMN qgep_od.measuring_point.remark IS 'General remarks / Allgemeine Bemerkungen / Remarques générales';
-ALTER TABLE qgep_od.measuring_point ADD COLUMN situation_geometry geometry('POINT', :SRID);
+ALTER TABLE qgep_od.measuring_point ADD COLUMN situation_geometry geometry('POINTZ', :SRID);
 CREATE INDEX in_qgep_od_measuring_point_situation_geometry ON qgep_od.measuring_point USING gist (situation_geometry );
 COMMENT ON COLUMN qgep_od.measuring_point.situation_geometry IS 'National position coordinates (East, North) / Landeskoordinate Ost/Nord / Coordonnées nationales Est/Nord';
 ALTER TABLE qgep_od.measuring_point ADD COLUMN last_modification TIMESTAMP without time zone DEFAULT now();
