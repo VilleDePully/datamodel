@@ -110,6 +110,12 @@ ADD COLUMN pully_validation boolean;
 ALTER TABLE qgep_od.wastewater_structure
 ADD COLUMN pully_fk_chantier integer;
 
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN pully_controle_video_date date;
+
+ALTER TABLE qgep_od.wastewater_structure
+ADD COLUMN pully_controle_terrain_date date;
+
 /* Insertion des références objet des couvercles */
 
 ALTER TABLE qgep_od.wastewater_node
