@@ -10,6 +10,7 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_reach AS
     material.abbr_fr AS material_abbr,
     vw_qgep_reach.ch_pipe_length AS longueur_mesuree,
     status.value_fr AS statut,
+    structure_condition.value_fr AS etat,
     horizontal_positioning.value_fr AS precplan,
     owner.identifier AS proprietaire,
     vw_qgep_reach.ws_year_of_construction AS annee_construction,
