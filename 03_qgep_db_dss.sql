@@ -2137,7 +2137,7 @@ WITH (
 CREATE SEQUENCE qgep_od.seq_structure_part_oid INCREMENT 1 MINVALUE 0 MAXVALUE 999999 START 0;
  ALTER TABLE qgep_od.structure_part ALTER COLUMN obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','structure_part');
 COMMENT ON COLUMN qgep_od.structure_part.obj_id IS '[primary_key] INTERLIS STANDARD OID (with Postfix/Präfix) or UUOID, see www.interlis.ch';
-ALTER TABLE qgep_od.structure_part ADD COLUMN identifier  varchar(20) ;
+ALTER TABLE qgep_od.structure_part ADD COLUMN identifier  varchar(100) ;
 COMMENT ON COLUMN qgep_od.structure_part.identifier IS '';
 ALTER TABLE qgep_od.structure_part ADD COLUMN remark text ;
 COMMENT ON COLUMN qgep_od.structure_part.remark IS 'General remarks / Allgemeine Bemerkungen / Remarques générales';
@@ -2748,7 +2748,7 @@ ALTER TABLE qgep_od.measuring_point ADD COLUMN purpose  integer ;
 COMMENT ON COLUMN qgep_od.measuring_point.purpose IS 'Purpose of measurement / Zweck der Messung / Objet de la mesure';
 ALTER TABLE qgep_od.measuring_point ADD COLUMN remark text ;
 COMMENT ON COLUMN qgep_od.measuring_point.remark IS 'General remarks / Allgemeine Bemerkungen / Remarques générales';
-ALTER TABLE qgep_od.measuring_point ADD COLUMN situation_geometry geometry('POINT', :SRID);
+ALTER TABLE qgep_od.measuring_point ADD COLUMN situation_geometry geometry('POINTZ', :SRID);
 CREATE INDEX in_qgep_od_measuring_point_situation_geometry ON qgep_od.measuring_point USING gist (situation_geometry );
 COMMENT ON COLUMN qgep_od.measuring_point.situation_geometry IS 'National position coordinates (East, North) / Landeskoordinate Ost/Nord / Coordonnées nationales Est/Nord';
 ALTER TABLE qgep_od.measuring_point ADD COLUMN last_modification TIMESTAMP without time zone DEFAULT now();

@@ -57,7 +57,6 @@ def vw_qgep_wastewater_structure(srid: int,
         main_co_sp.renovation_demand AS co_renovation_demand,
        
         {main_co_cols},
-        aggregated_wastewater_structure.situation_geometry,
     
         {ma_columns},
     
@@ -74,15 +73,7 @@ def vw_qgep_wastewater_structure(srid: int,
         ws._usage_current AS _channel_usage_current,
         ws._function_hierarchic AS _channel_function_hierarchic
     
-        FROM (
-          SELECT ws.obj_id,
-            ST_Collect(co.situation_geometry)::geometry(MULTIPOINTZ, %(SRID)s) AS situation_geometry
-          FROM qgep_od.wastewater_structure ws
-          LEFT JOIN qgep_od.structure_part sp ON sp.fk_wastewater_structure = ws.obj_id
-          LEFT JOIN qgep_od.cover co ON co.obj_id = sp.obj_id
-          GROUP BY ws.obj_id
-        ) aggregated_wastewater_structure
-        LEFT JOIN qgep_od.wastewater_structure ws ON ws.obj_id = aggregated_wastewater_structure.obj_id
+        FROM qgep_od.wastewater_structure ws
         LEFT JOIN qgep_od.cover main_co ON main_co.obj_id = ws.fk_main_cover
         LEFT JOIN qgep_od.structure_part main_co_sp ON main_co_sp.obj_id = ws.fk_main_cover
         LEFT JOIN qgep_od.manhole ma ON ma.obj_id = ws.obj_id
@@ -91,11 +82,13 @@ def vw_qgep_wastewater_structure(srid: int,
         LEFT JOIN qgep_od.infiltration_installation ii ON ii.obj_id = ws.obj_id
         LEFT JOIN qgep_od.wastewater_networkelement ne ON ne.obj_id = ws.fk_main_wastewater_node
         LEFT JOIN qgep_od.wastewater_node wn ON wn.obj_id = ws.fk_main_wastewater_node
-        {extra_joins};
+        {extra_joins}
+        WHERE ws.fk_main_wastewater_node IS NOT NULL
+        ;
        
         ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_structure');
-        ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER co_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','structure_part');
-        ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER wn_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_node');
+        ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER co_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','cover');
+        ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER wn_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_networkelement');
     """.format(extra_cols='\n    '.join([select_columns(pg_cur=cursor,
                                                         table_schema=table_parts(table_def['table'])[0],
                                                         table_name=table_parts(table_def['table'])[1],
@@ -165,9 +158,9 @@ def vw_qgep_wastewater_structure(srid: int,
                                            table_alias='wn',
                                            remove_pkey=False,
                                            indent=4,
-                                           skip_columns=['situation_geometry'],
+                                           skip_columns=[],
                                            prefix='wn_',
-                                           remap_columns={},
+                                           remap_columns={'situation_geometry': 'situation_geometry'},
                                            columns_at_end=['obj_id']),
                ne_cols=select_columns(pg_cur=cursor,
                                            table_schema='qgep_od',
@@ -539,8 +532,8 @@ def vw_qgep_wastewater_structure(srid: int,
 
     extras = """
     ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_structure');
-    ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER co_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','structure_part');
-    ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER wn_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_node');
+    ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER co_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','cover');
+    ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER wn_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_networkelement');
     """
     cursor.execute(extras)
 
