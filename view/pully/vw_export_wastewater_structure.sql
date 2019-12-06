@@ -15,8 +15,9 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_wastewater_structure AS
     vw_qgep_wastewater_structure.year_of_construction AS annee_construction,
     usage.value_fr AS genre_utilisation,
     fonction_hierarchique.value_fr AS fonction_hierarchique,
+    vw_qgep_wastewater_structure.pully_validation as validation,
     vw_qgep_wastewater_structure._label,
-    vw_qgep_wastewater_structure.wn_pully_orientation,
+    vw_qgep_wastewater_structure.wn_pully_orientation AS orientation,
     --wastewater_structure.detail_geometry_geometry,
     vw_qgep_wastewater_structure.situation_geometry
 

@@ -17,6 +17,7 @@ CREATE OR REPLACE VIEW qgep_sigip.vw_export_reach AS
     vw_qgep_reach.rp_from_level AS altitude_depart,
     vw_qgep_reach.rp_to_level AS altitude_arrivee,
     vw_qgep_reach.ws_remark AS remarque,
+    vw_qgep_reach.ws_pully_validation AS validation,
     vw_qgep_reach.progression_geometry AS the_geom
 
    FROM qgep_od.vw_qgep_reach
