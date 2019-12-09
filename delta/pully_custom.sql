@@ -93,6 +93,20 @@ INSERT INTO qgep_vl.pully_se_type (code, vsacode, value_en, value_de, value_fr, 
 ALTER TABLE qgep_od.wastewater_node
 ADD COLUMN pully_orientation double precision DEFAULT 0;
 
+/* Ajout des précisions des radiers */
+
+ALTER TABLE qgep_od.wastewater_node
+ADD COLUMN pully_fk_positional_accuracy integer;
+
+CREATE TABLE qgep_vl.pully_node_positional_accuracy () INHERITS (qgep_sys.value_list_base);
+ALTER TABLE qgep_vl.pully_node_positional_accuracy ADD CONSTRAINT pkey_qgep_vl_pully_node_positional_accuracy_code PRIMARY KEY (code);
+ INSERT INTO qgep_vl.pully_node_positional_accuracy (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active) VALUES (14780,14780,'accurate','genau','precise', 'precisa', 'precisa', '', 'LG', 'P', '', '', 'true');
+ INSERT INTO qgep_vl.pully_node_positional_accuracy (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active) VALUES (14778,14778,'unknown','unbekannt','inconnue', 'sconosciuto', 'necunoscuta', '', 'U', 'I', '', '', 'true');
+ INSERT INTO qgep_vl.pully_node_positional_accuracy (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active) VALUES (14779,14779,'inaccurate','ungenau','imprecise', 'impreciso', 'imprecisa', '', 'LU', 'IP', '', '', 'true');
+ ALTER TABLE qgep_od.wastewater_node ADD CONSTRAINT fkey_vl_pully_node_positional_accuracy FOREIGN KEY (pully_fk_positional_accuracy)
+ REFERENCES qgep_vl.pully_node_positional_accuracy (code) MATCH SIMPLE 
+ ON UPDATE RESTRICT ON DELETE RESTRICT;
+
 /* Ajout des références objet de topobase*/
 
 ALTER TABLE qgep_od.wastewater_structure
@@ -215,6 +229,15 @@ WHERE code NOT IN (5075,5074,5065,5069);
 UPDATE qgep_vl.channel_usage_current
 SET active = FALSE
 WHERE code NOT IN (4571,4526,4514,4522);
+
+/* cover_positional_accuracy */
+ INSERT INTO qgep_vl.cover_positional_accuracy (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active) VALUES (15378,15378,'accurate','genau','precise', 'precisa', 'precisa', '', 'LG', 'P', '', '', 'true');
+ INSERT INTO qgep_vl.cover_positional_accuracy (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active) VALUES (15379,15379,'unknown','unbekannt','inconnue', 'sconosciuto', 'necunoscuta', '', 'U', 'I', '', '', 'true');
+ INSERT INTO qgep_vl.cover_positional_accuracy (code, vsacode, value_en, value_de, value_fr, value_it, value_ro, abbr_en, abbr_de, abbr_fr, abbr_it, abbr_ro, active) VALUES (15380,15380,'inaccurate','ungenau','imprecise', 'impreciso', 'imprecisa', '', 'LU', 'IP', '', '', 'true');
+
+UPDATE qgep_vl.cover_positional_accuracy
+SET active = FALSE
+WHERE code NOT IN (15378,15379,15380);
 
 /*
 UPDATE qgep_vl.channel_function_hierarchic
