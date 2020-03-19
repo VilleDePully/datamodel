@@ -1,6 +1,6 @@
 CREATE OR REPLACE VIEW qgep_sigip.vw_export_file AS
   SELECT object as obj_id,
-    string_agg(_url,',')
+    string_agg(_url,',') as fichiers
   FROM qgep_od.vw_file
   WHERE object is NOT NULL
   GROUP BY object;
