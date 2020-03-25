@@ -22,5 +22,8 @@ psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_wastewater_n
 psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_cover.sql
 psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_detail_structure.sql
 psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_file.sql
+psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_files.sql
+psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_cr_photo_min.sql
+psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_cr_photo_max.sql
 psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_reach_from.sql
 psql "service=${PGSERVICE}" -v ON_ERROR_STOP=on -f ${DIR}/vw_export_reach_to.sql
