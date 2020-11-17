@@ -76,3 +76,23 @@ Installation:
 
  * `export PG_SERVICE=pg_qgep`
  * Run `scripts/db_setup.sh`
+
+Using Docker (quickstart):
+----------------
+
+Install Docker, then run :
+
+```bash
+docker run -d --name qgep -p 5432:5432 opengisch/qgep_datamodel
+```
+
+This sets up two different databases, that should be available via `127.0.0.1:5432` with user and password `postgres` :
+
+- *qgep_build* : the structure using installation scripts
+- *qgep_prod* : the demo data (produced through successive pum migrations of initial demo data)
+
+**WARNING** : The Docker setup is currently meant for testing purposes only.
+The following instructions do not set up a correct installation (data not
+persisted, no password, etc.)
+
+Head to `.docker/README.md` for advanced usage of the QGEP Docker setup.

@@ -41,37 +41,41 @@ def vw_qgep_wastewater_structure(srid: int,
           WHEN dp.obj_id IS NOT NULL THEN 'discharge_point'
           WHEN ii.obj_id IS NOT NULL THEN 'infiltration_installation'
           ELSE 'unknown'
-        END AS ws_type,
+        END AS ws_type
 
-        ma.function AS ma_function,
-        ss.function as ss_function,
-        ws.fk_owner,
-        ws.status,
+        , ma.function AS ma_function
+        , ss.function as ss_function
+        , ws.fk_owner
+        , ws.status
 
         {extra_cols}
 
-        {ws_cols},
+        , {ws_cols}
 
-        main_co_sp.identifier AS co_identifier,
-        main_co_sp.remark AS co_remark,
-        main_co_sp.renovation_demand AS co_renovation_demand,
+        , main_co_sp.identifier AS co_identifier
+        , main_co_sp.remark AS co_remark
+        , main_co_sp.renovation_demand AS co_renovation_demand
 
-        {main_co_cols},
+        , {main_co_cols}
 
-        {ma_columns},
+        , {ma_columns}
 
-        {ss_columns},
+        , {ss_columns}
 
-        {ii_columns},
+        , {ii_columns}
 
-        {dp_columns},
+        , {dp_columns}
 
-        {wn_cols},
-        {ne_cols},
+        , {wn_cols}
+        , {ne_cols}
 
-        ws._label,
-        ws._usage_current AS _channel_usage_current,
-        ws._function_hierarchic AS _channel_function_hierarchic
+        , ws._label
+        , ws._cover_label
+        , ws._bottom_label
+        , ws._input_label
+        , ws._output_label
+        , ws._usage_current AS _channel_usage_current
+        , ws._function_hierarchic AS _channel_function_hierarchic
 
         FROM qgep_od.wastewater_structure ws
         LEFT JOIN qgep_od.cover main_co ON main_co.obj_id = ws.fk_main_cover
@@ -82,10 +86,10 @@ def vw_qgep_wastewater_structure(srid: int,
         LEFT JOIN qgep_od.infiltration_installation ii ON ii.obj_id = ws.obj_id
         LEFT JOIN qgep_od.wastewater_networkelement ne ON ne.obj_id = ws.fk_main_wastewater_node
         LEFT JOIN qgep_od.wastewater_node wn ON wn.obj_id = ws.fk_main_wastewater_node
+        LEFT JOIN qgep_od.channel ch ON ch.obj_id = ws.obj_id
         {extra_joins}
-        WHERE ws.fk_main_wastewater_node IS NOT NULL
-        ;
-       
+        WHERE ch.obj_id IS NULL;
+
         ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_structure');
         ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER co_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','cover');
         ALTER VIEW qgep_od.vw_qgep_wastewater_structure ALTER wn_obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','wastewater_node');
@@ -104,7 +108,7 @@ def vw_qgep_wastewater_structure(srid: int,
                                       table_alias='ws',
                                       remove_pkey=False,
                                       indent=4,
-                                      skip_columns=['identifier', 'fk_owner', 'status', '_label', '_usage_current',
+                                      skip_columns=['identifier', 'fk_owner', 'status', '_label', '_cover_label', '_bottom_label', '_input_label', '_output_label', '_usage_current',
                                                     '_function_hierarchic', 'fk_main_cover', 'fk_main_wastewater_node', 'detail_geometry_geometry']),
                main_co_cols=select_columns(pg_cur=cursor,
                                            table_schema='qgep_od',
@@ -235,7 +239,7 @@ def vw_qgep_wastewater_structure(srid: int,
                                         table_alias='ws',
                                         remove_pkey=False,
                                         indent=2,
-                                        skip_columns=['_label', '_usage_current', '_function_hierarchic',
+                                        skip_columns=['_label', '_cover_label', '_bottom_label', '_input_label', '_output_label', '_usage_current', '_function_hierarchic',
                                                       'fk_main_cover', 'fk_main_wastewater_node', 'detail_geometry_geometry']),
                insert_ma=insert_command(pg_cur=cursor,
                                         table_schema='qgep_od',
@@ -280,7 +284,7 @@ def vw_qgep_wastewater_structure(srid: int,
                                         pkey='obj_id',
                                         indent=6,
                                         insert_values={'identifier': "COALESCE(NULLIF(NEW.wn_identifier,''), NEW.identifier)",
-                                                       'situation_geometry': 'ST_GeometryN( NEW.situation_geometry, 1 )',
+                                                       'situation_geometry': 'ST_SetSRID(ST_MakePoint(ST_X(NEW.situation_geometry), ST_Y(NEW.situation_geometry), \'nan\'), {srid} )'.format(srid=srid),
                                                        'last_modification': 'NOW()',
                                                        'fk_provider': "COALESCE(NULLIF(NEW.wn_fk_provider,''), NEW.fk_provider)",
                                                        'fk_dataowner': "COALESCE(NULLIF(NEW.wn_fk_dataowner,''), NEW.fk_dataowner)",
@@ -296,7 +300,7 @@ def vw_qgep_wastewater_structure(srid: int,
                                         indent=6,
                                         remap_columns={'cover_shape': 'co_shape'},
                                         insert_values={'identifier': "COALESCE(NULLIF(NEW.co_identifier,''), NEW.identifier)",
-                                                       'situation_geometry': 'ST_GeometryN( NEW.situation_geometry, 1 )',
+                                                       'situation_geometry': 'ST_SetSRID(ST_MakePoint(ST_X(NEW.situation_geometry), ST_Y(NEW.situation_geometry), \'nan\'), {srid} )'.format(srid=srid),
                                                        'last_modification': 'NOW()',
                                                        'fk_provider': 'NEW.fk_provider',
                                                        'fk_dataowner': 'NEW.fk_dataowner',
@@ -354,8 +358,8 @@ def vw_qgep_wastewater_structure(srid: int,
 
       -- Cover geometry has been moved
       IF NOT ST_Equals( OLD.situation_geometry, NEW.situation_geometry) THEN
-        dx = ST_XMin(NEW.situation_geometry) - ST_XMin(OLD.situation_geometry);
-        dy = ST_YMin(NEW.situation_geometry) - ST_YMin(OLD.situation_geometry);
+        dx = ST_X(NEW.situation_geometry) - ST_X(OLD.situation_geometry);
+        dy = ST_Y(NEW.situation_geometry) - ST_Y(OLD.situation_geometry);
 
         -- Move wastewater node as well
         -- comment: TRANSLATE((ST_MakePoint(500, 900, 'NaN')), 10, 20, 0) would return NaN NaN NaN - so we have this workaround
@@ -463,7 +467,7 @@ def vw_qgep_wastewater_structure(srid: int,
                                         remove_pkey=False,
                                         indent=6,
                                         skip_columns=['detail_geometry_geometry', 'last_modification',
-                                                      '_usage_current', '_function_hierarchic', '_label',
+                                                      '_usage_current', '_function_hierarchic', '_label', '_cover_label', '_bottom_label', '_input_label', '_output_label',
                                                       'fk_main_cover', 'fk_main_wastewater_node', '_depth'],
                                         update_values={}),
                update_ma=update_command(pg_cur=cursor,

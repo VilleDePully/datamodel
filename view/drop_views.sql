@@ -1,3 +1,8 @@
+
+-- export views
+DROP VIEW IF EXISTS qgep_od.vw_export_reach;
+DROP VIEW IF EXISTS qgep_od.vw_export_wastewater_structure;
+
 -- import
 DROP VIEW IF EXISTS qgep_import.vw_manhole;
 
@@ -63,7 +68,34 @@ DROP VIEW IF EXISTS qgep_od.vw_leapingweir;
 DROP VIEW IF EXISTS qgep_od.vw_prank_weir;
 DROP VIEW IF EXISTS qgep_od.vw_pump;
 
+-- others
+DROP VIEW IF EXISTS qgep_od.vw_individual_surface;
+
 -- manual views
 DROP VIEW IF EXISTS qgep_od.vw_file;
 DROP VIEW IF EXISTS qgep_od.vw_change_points;
 DROP VIEW IF EXISTS qgep_od.vw_catchment_area_connections;
+
+-- qgep_swmm views
+DROP VIEW IF EXISTS qgep_swmm.vw_aquifers CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_conduits CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_coordinates CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_coverages CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_dividers CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_dwf CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_infiltration CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_junctions CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_landuses CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_losses CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_outfalls CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_polygons CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_pumps CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_raingages CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_storages CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_subareas CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_subcatchments CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_tags CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_vertices CASCADE;
+DROP VIEW IF EXISTS qgep_swmm.vw_xsections CASCADE;
+
+

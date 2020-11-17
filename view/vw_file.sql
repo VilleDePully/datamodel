@@ -18,7 +18,7 @@
 CREATE OR REPLACE VIEW qgep_od.vw_file AS
   SELECT f.obj_id,
     f.identifier,
-    f.kind AS file_kind,
+    f.kind,
     f.object,
     f.class,
     -- dm.path,
@@ -28,6 +28,8 @@ CREATE OR REPLACE VIEW qgep_od.vw_file AS
     f.remark
    FROM qgep_od.file f
      LEFT JOIN qgep_od.data_media dm ON dm.obj_id::text = f.fk_data_media::text;
+     
+ALTER VIEW qgep_od.vw_file ALTER obj_id SET DEFAULT qgep_sys.generate_oid('qgep_od','file');
 
 -- ******************************************************************************
 -- 3. FUNCTIONS :
@@ -41,9 +43,11 @@ CREATE OR REPLACE FUNCTION qgep_od.vw_file_delete()
 $BODY$
   BEGIN
     DELETE FROM qgep_od.file WHERE obj_id = OLD.obj_id;
-  END; $BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
+    RETURN OLD;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE
+COST 100;
 
 
 -- ******************************************************************************
@@ -71,7 +75,7 @@ $BODY$
     SELECT
       NEW.class,
       NEW.identifier,
-      NEW.file_kind,
+      NEW.kind,
       NEW.object,
       SUBSTRING(NEW._url, LENGTH("path")+1, LENGTH(NEW._url)), -- path_relative,
       NEW.dataowner, -- fk_dataowner,
@@ -109,7 +113,7 @@ NEW._url = replace(NEW._url, '\', '/');
     SET
     class = NEW.class,
     identifier = NEW.identifier,
-    kind = NEW.file_kind,
+    kind = NEW.kind,
     object = NEW.object,
     path_relative = SUBSTRING(NEW._url, LENGTH(dm.path)+1, LENGTH(NEW._url)),
     fk_dataowner = NEW.dataowner,
