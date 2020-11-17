@@ -2,9 +2,6 @@
 -- View for the swmm module class outfalls
 -- 20190329 qgep code sprint SB, TP
 --------
-
-DROP VIEW IF EXISTS qgep_swmm.vw_outfalls;
-
 CREATE OR REPLACE VIEW qgep_swmm.vw_outfalls AS
 
 SELECT
@@ -14,7 +11,7 @@ SELECT
   NULL as StageData,
   'NO'::varchar as tide_gate,
   NULL::varchar as RouteTo,
-  ws.identifier || ', ' || ws.remark as description,
+  CONCAT(ws.identifier, ', ', ws.remark) as description,
   dp.obj_id::varchar as tag,
   wn.situation_geometry as geom
 FROM qgep_od.discharge_point as dp

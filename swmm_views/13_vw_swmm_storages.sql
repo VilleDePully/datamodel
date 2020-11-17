@@ -2,9 +2,6 @@
 -- View for the swmm module class storages
 -- 20190329 qgep code sprint SB, TP
 --------
-
-DROP VIEW IF EXISTS qgep_swmm.vw_storages;
-
 CREATE OR REPLACE VIEW qgep_swmm.vw_storages AS
 
 SELECT
@@ -21,7 +18,7 @@ SELECT
 	NULL as Psi,
 	NULL as Ksat, -- conductivity
 	NULL as IMD,	
-	ws.identifier || ', ' || ws.remark as description,
+	CONCAT(ws.identifier, ', ', ws.remark) as description,
 	ss.obj_id as tag,
 	wn.situation_geometry as geom
 FROM qgep_od.special_structure ss
@@ -79,7 +76,7 @@ SELECT
 	NULL as IMD, 	
 	--st_x(wn.situation_geometry) as X_coordinate,
 	--st_y(wn.situation_geometry) as Y_coordinate,
-	ws.identifier || ', ' || ws.remark as description,
+	CONCAT(ws.identifier, ', ', ws.remark) as description,
 	ii.obj_id as tag,
 	wn.situation_geometry as geom
 FROM qgep_od.infiltration_installation as ii
